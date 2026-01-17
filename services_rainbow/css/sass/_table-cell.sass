@@ -1,0 +1,87 @@
+@import "../../css/sass/variables"
+@import "../../css/sass/media"
+
+.table-cell
+    display: flex
+
+    &.wide-field
+        flex-direction: column
+
+    &:not(.small) > *
+        line-height: $table-cell-line-height
+
+    > .name
+        color: $table-cell-name-color
+        font-size: $table-cell-name-font-size
+        word-wrap: break-word
+        @if $table-cell-name-text-transform != 'inherit'
+            text-transform: $table-cell-name-text-transform
+
+        &:after
+            content: ':'
+
+        // Fallback for legacy mock-up
+        > div
+            display: inline
+
+    &:not(.wide-field) > .name
+        min-width: $table-cell-name-width
+        flex-basis: $table-cell-name-width
+
+        +respond-to(tablet_and_desktop)
+            min-width: $table-cell-name-width_xl
+            flex-basis: $table-cell-name-width_xl
+
+        +respond-to(desktop_sm_only)
+            min-width: $table-cell-name-width_lg
+            flex-basis: $table-cell-name-width_lg
+
+        &+ .value
+            padding-#{$left}: $table-cell-value-left-padding
+
+    &.small
+        line-height: $table-cell-small-line-height
+
+        &:not(.wide-field)
+            > .name
+                +respond-to(tablet_and_desktop)
+                    min-width: $table-cell-small-name-width_xl
+                    flex-basis: $table-cell-small-name-width_xl
+
+                +respond-to(desktop_sm_only)
+                    min-width: $table-cell-small-name-width_lg
+                    flex-basis: $table-cell-small-name-width_lg
+
+    > .value
+        font-size: $table-cell-value-font-size
+        word-wrap: break-word
+        overflow: hidden
+        @if $table-cell-value-text-transform != 'inherit'
+            text-transform: $table-cell-value-text-transform
+
+    .checkboxes
+        > *
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+
+            &:not(.active)
+                color: $table-cell-checkbox-not-active-color
+                text-decoration: line-through
+
+            svg
+                width: $table-cell-checkbox-width
+                height: $table-cell-checkbox-height
+
+            &:not(.active) svg
+                visibility: hidden
+
+            &.active svg
+                fill: red
+
+/**
+ * @todo - move to listing details page styles once these styles
+ *         have been moved to new controller styles file
+ */
+.listing-fields > div:not(.no-group) div.body > div > .table-cell.textarea:only-child > .name
+    display: none
